@@ -9,3 +9,4 @@ apps/backend/static
 apps/storefront/.next
 apps/storefront/out
 *.log
+.devcontainer/publishable-key.txt

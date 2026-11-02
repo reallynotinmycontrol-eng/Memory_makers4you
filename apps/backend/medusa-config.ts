@@ -15,6 +15,26 @@ const modules: any[] = [
   { resolve: "./src/modules/store-content" },
 ]
 
+// Public address for uploaded images when they're stored on this server
+// (set automatically in Codespaces; on a VPS set it to https://api.yourstore.in/static).
+if (process.env.FILE_PUBLIC_URL) {
+  modules.push({
+    resolve: "@medusajs/medusa/file",
+    options: {
+      providers: [
+        {
+          resolve: "@medusajs/medusa/file-local",
+          id: "local",
+          options: {
+            upload_dir: "static",
+            backend_url: process.env.FILE_PUBLIC_URL,
+          },
+        },
+      ],
+    },
+  })
+}
+
 if (razorpayEnabled) {
   modules.push({
     resolve: "@medusajs/medusa/payment",
