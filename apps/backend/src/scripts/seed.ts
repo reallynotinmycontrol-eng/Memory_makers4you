@@ -364,34 +364,26 @@ export default async function seedCraftStore({ container }: ExecArgs) {
     },
   ])
 
-  await content.createHomeSections([
-    { title: "Shop by Category", type: "category_grid", category_handle: null, max_items: 12, rank: 0 },
-    { title: "Best Sellers", type: "product_grid", collection_handle: "best-sellers", max_items: 8, rank: 1 },
-    {
-      title: "Silk Thread Materials",
-      subtitle: "Bangles, thread, glue and finishing touches",
+  // Homepage: one photo grid per main category (in menu order), with a
+  // couple of product rows in between. Reorder or edit in Admin → Storefront.
+  const homeSections: Record<string, unknown>[] = []
+  CATEGORY_TREE.forEach((c, i) => {
+    homeSections.push({
+      title: c.name,
       type: "category_grid",
-      category_handle: "silk-thread-materials",
-      max_items: 12,
-      rank: 2,
-    },
-    { title: "New Arrivals", type: "product_grid", collection_handle: "new-arrivals", max_items: 8, rank: 3 },
-    {
-      title: "Jewellery Making",
-      type: "category_grid",
-      category_handle: "jewellery-making",
-      max_items: 12,
-      rank: 4,
-    },
-    {
-      title: "Resin Art",
-      subtitle: "Resin, moulds and inclusions",
-      type: "product_grid",
-      category_handle: "resin-art",
-      max_items: 8,
-      rank: 5,
-    },
-  ] as any)
+      category_handle: slugify(c.name),
+      max_items: 24,
+    })
+    if (i === 1) {
+      homeSections.push({ title: "Best Sellers", type: "product_grid", collection_handle: "best-sellers", max_items: 8 })
+    }
+    if (i === 4) {
+      homeSections.push({ title: "New Arrivals", type: "product_grid", collection_handle: "new-arrivals", max_items: 8 })
+    }
+  })
+  await content.createHomeSections(
+    homeSections.map((sec, rank) => ({ ...sec, rank })) as any
+  )
 
   logger.info("✔ Seeding finished.")
   logger.info("--------------------------------------------------------------")

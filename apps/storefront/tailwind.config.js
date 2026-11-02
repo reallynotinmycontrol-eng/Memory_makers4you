@@ -41,6 +41,11 @@ module.exports = {
           600: "#A8861C",
         },
         blush: "#FBF5F7",
+        // Section headings on the homepage
+        clay: {
+          500: "#B07A5F",
+          600: "#9A6248",
+        },
         ink: "#1F1B24",
         grey: {
           0: "#FFFFFF",

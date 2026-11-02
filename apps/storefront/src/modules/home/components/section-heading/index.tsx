@@ -1,5 +1,9 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
+/**
+ * Centered section title with a short line on each side, e.g.
+ *   ———  Silk Thread Materials  ———
+ */
 export default function SectionHeading({
   title,
   subtitle,
@@ -10,15 +14,19 @@ export default function SectionHeading({
   viewAllHref?: string
 }) {
   return (
-    <div className="mb-6 flex items-end justify-between gap-4 small:mb-8">
-      <div>
-        <h2 className="heading-display text-2xl small:text-[2rem]">{title}</h2>
-        {subtitle && <p className="mt-1 text-sm text-grey-50">{subtitle}</p>}
+    <div className="mb-8 text-center small:mb-10">
+      <div className="flex items-center justify-center gap-4 small:gap-8">
+        <span aria-hidden className="h-0.5 w-10 shrink-0 bg-clay-500 small:w-20" />
+        <h2 className="font-display text-[1.6rem] leading-tight text-clay-600 small:text-[2.4rem]">
+          {title}
+        </h2>
+        <span aria-hidden className="h-0.5 w-10 shrink-0 bg-clay-500 small:w-20" />
       </div>
+      {subtitle && <p className="mt-2 text-sm text-grey-50">{subtitle}</p>}
       {viewAllHref && (
         <LocalizedClientLink
           href={viewAllHref}
-          className="shrink-0 text-sm font-semibold text-peacock-700 underline-offset-4 hover:underline"
+          className="mt-2 inline-block text-sm font-semibold text-clay-600 underline-offset-4 hover:underline"
         >
           View all
         </LocalizedClientLink>
