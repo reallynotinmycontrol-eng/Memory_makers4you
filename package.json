@@ -1,0 +1,15 @@
+{
+  "name": "craft-store",
+  "private": true,
+  "description": "Jewellery-making & craft supplies store: Medusa backend + admin (apps/backend) and Next.js storefront (apps/storefront)",
+  "scripts": {
+    "install:all": "npm --prefix apps/backend install && npm --prefix apps/storefront install",
+    "setup": "npm --prefix apps/backend run setup",
+    "dev:backend": "npm --prefix apps/backend run dev",
+    "dev:storefront": "npm --prefix apps/storefront run dev",
+    "build": "npm --prefix apps/backend run build && npm --prefix apps/storefront run build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
