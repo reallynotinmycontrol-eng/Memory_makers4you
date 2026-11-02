@@ -14,12 +14,14 @@ export default function MegaMenu({ tree }: { tree: Tree }) {
   if (!tree.length) return null
 
   return (
-    <nav aria-label="Categories" className="hidden small:block border-t border-grey-10">
+    <nav aria-label="Categories" className="relative hidden small:block border-t border-grey-10">
       <ul className="content-container flex items-center justify-center gap-x-1">
         {tree.map((cat) => {
           const children = cat.category_children ?? []
           return (
-            <li key={cat.id} className="group relative">
+            // Panels are positioned against the <nav>, centred under the whole
+            // bar, so menus near the edges never overflow the viewport.
+            <li key={cat.id} className="group">
               <LocalizedClientLink
                 href={`/categories/${cat.handle}`}
                 className="flex items-center gap-1 px-4 py-3 text-sm font-semibold text-ink transition-colors hover:text-peacock-700 group-focus-within:text-peacock-700"

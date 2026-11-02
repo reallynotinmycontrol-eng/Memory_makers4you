@@ -28,7 +28,8 @@ export default function PlaceholderArt({
 
   const beads = Array.from({ length: 18 }, (_, i) => {
     const a = (i / 18) * Math.PI * 2
-    return { x: 50 + Math.cos(a) * 34, y: 50 + Math.sin(a) * 34, r: i % 3 === 0 ? 3.4 : 2.4 }
+    const round = (n: number) => Math.round(n * 100) / 100
+    return { x: round(50 + Math.cos(a) * 34), y: round(50 + Math.sin(a) * 34), r: i % 3 === 0 ? 3.4 : 2.4 }
   })
 
   return (

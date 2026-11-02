@@ -151,7 +151,8 @@ const BeadPattern = () => (
     {[0, 1, 2, 3].map((row) =>
       Array.from({ length: 22 }, (_, i) => {
         const x = 620 + i * 28
-        const y = 70 + row * 110 + Math.sin(i / 2.5 + row) * 26
+        // Rounded so server and browser render identical values (no hydration mismatch)
+        const y = Math.round((70 + row * 110 + Math.sin(i / 2.5 + row) * 26) * 100) / 100
         const big = i % 4 === 0
         return (
           <circle
