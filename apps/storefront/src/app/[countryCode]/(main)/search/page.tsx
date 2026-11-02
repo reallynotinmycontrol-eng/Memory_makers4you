@@ -24,7 +24,7 @@ export default async function SearchPage(props: Params) {
         <h1 className="heading-display text-3xl">Search</h1>
         <p className="mt-2 text-sm text-grey-50">
           Type what you&apos;re looking for in the search box above, for example
-          “kundan” or “resin mould”.
+          “kundan” or “clip stones”.
         </p>
       </div>
     )

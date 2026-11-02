@@ -39,7 +39,7 @@ export default function SearchForm({
         value={q}
         autoFocus={autoFocus}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="Search beads, kundan, resin…"
+        placeholder="Search kundans, beads, chains…"
         className="h-11 w-full rounded-full border border-grey-20 bg-blush pl-5 pr-12 text-sm text-ink placeholder:text-grey-50 focus:border-peacock-700 focus:bg-white focus:outline-none"
       />
       <button

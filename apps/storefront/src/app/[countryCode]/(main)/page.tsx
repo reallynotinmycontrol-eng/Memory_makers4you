@@ -11,7 +11,7 @@ import { TruckIcon } from "@modules/store-ui/icons"
 
 export const metadata: Metadata = {
   description:
-    "Shop silk thread, kundan stones, beads, resin art and craft supplies online. Shipped across India.",
+    "Shop kundan stones, clip stones, beads, chains and jewellery-making supplies online. Shipped across India.",
 }
 
 // Re-render the homepage at most once a minute so admin edits show up.

@@ -5,7 +5,7 @@ An online store for jewellery-making and craft supplies.
 - **apps/backend** – Medusa v2.18 backend and **admin panel** (products, categories, orders, customers, discounts, plus a custom **Storefront** page for banners, homepage sections and site settings). Includes a **Razorpay** payment provider.
 - **apps/storefront** – Next.js storefront. Everything on it comes from the admin: menu, homepage, products, prices, stock, banners, announcement bar, contact details.
 
-Prices are in **INR**, entered **inclusive of GST**. The seed creates an India region, two shipping options (Standard ₹70, Express ₹150), 7 main categories with ~50 sub-categories, and 28 sample products with no photos (the store shows a placeholder until you upload your own).
+Prices are in **INR**, entered **inclusive of GST**. The seed creates an India region, two shipping options (Standard ₹70, Express ₹150), 7 main categories with 37 sub-categories, and the 93 products from the MemoryMakers4U price list (`apps/backend/src/scripts/catalog.ts`) with no photos (the store shows a placeholder until you upload your own).
 
 ---
 

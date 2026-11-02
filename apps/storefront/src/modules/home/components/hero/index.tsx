@@ -147,7 +147,7 @@ const BeadPattern = () => (
     viewBox="0 0 1200 480"
     preserveAspectRatio="xMidYMid slice"
   >
-    <rect width="1200" height="480" fill="#0A4549" />
+    <rect width="1200" height="480" fill="#5E2363" />
     {[0, 1, 2, 3].map((row) =>
       Array.from({ length: 22 }, (_, i) => {
         const x = 620 + i * 28
@@ -160,7 +160,7 @@ const BeadPattern = () => (
             cx={x}
             cy={y}
             r={big ? 9 : 5}
-            fill={big ? "#C9A227" : row % 2 ? "#B4235A" : "#E6CB6E"}
+            fill={big ? "#C9A227" : row % 2 ? "#D9A8E0" : "#E6CB6E"}
             opacity={big ? 0.95 : 0.55}
           />
         )

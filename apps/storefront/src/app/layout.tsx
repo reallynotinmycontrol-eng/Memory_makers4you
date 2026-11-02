@@ -16,7 +16,7 @@ const body = Mulish({
   display: "swap",
 })
 
-const STORE_NAME = process.env.NEXT_PUBLIC_STORE_NAME || "My Craft Store"
+const STORE_NAME = process.env.NEXT_PUBLIC_STORE_NAME || "MemoryMakers4U"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: `%s | ${STORE_NAME}`,
   },
   description:
-    "Shop silk thread, kundan stones, beads, resin art and craft supplies online. Shipped across India.",
+    "Shop kundan stones, clip stones, beads, chains and jewellery-making supplies online. Shipped across India.",
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {

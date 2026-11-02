@@ -3,8 +3,8 @@
  * the item's initials, tinted from the name so neighbouring tiles differ.
  */
 const TINTS = [
-  { bg: "#EEF7F7", bead: "#0E5E63" },
-  { bg: "#FCEEF3", bead: "#B4235A" },
+  { bg: "#F8F0FA", bead: "#7C2F82" },
+  { bg: "#FAEFF6", bead: "#B23C8F" },
   { bg: "#FBF6E6", bead: "#A8861C" },
   { bg: "#F1EEF8", bead: "#5B4A8B" },
 ]

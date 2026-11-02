@@ -17,7 +17,7 @@ export default async function Nav() {
     listCategoryTree(),
   ])
   const storeName =
-    settings.store_name || process.env.NEXT_PUBLIC_STORE_NAME || "My Craft Store"
+    settings.store_name || process.env.NEXT_PUBLIC_STORE_NAME || "MemoryMakers4U"
 
   return (
     <>
@@ -36,7 +36,10 @@ export default async function Nav() {
           >
             {settings.logo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={settings.logo_url} alt={storeName} className="h-10 w-auto small:h-12" />
+              <>
+                <img src={settings.logo_url} alt="" className="h-11 w-11 shrink-0 small:h-14 small:w-14" />
+                <span className="heading-display truncate text-xl text-peacock-800 small:text-2xl">{storeName}</span>
+              </>
             ) : (
               <>
                 <span aria-hidden className="kundan-ring hidden h-3 w-3 shrink-0 rounded-full bg-kumkum-600 xsmall:block" />

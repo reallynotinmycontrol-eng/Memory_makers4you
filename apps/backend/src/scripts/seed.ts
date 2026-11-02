@@ -24,7 +24,7 @@ import { STORE_CONTENT_MODULE } from "../modules/store-content"
 import StoreContentModuleService from "../modules/store-content/service"
 import { CATEGORY_TREE, PRODUCTS } from "./catalog"
 
-const STORE_NAME = process.env.STORE_NAME || "My Craft Store"
+const STORE_NAME = process.env.STORE_NAME || "MemoryMakers4U"
 
 const slugify = (s: string) =>
   s
@@ -265,10 +265,9 @@ export default async function seedCraftStore({ container }: ExecArgs) {
   const bestSellers = collections.find((c) => c.handle === "best-sellers")!
 
   // --------------------------------------------------------- products
-  logger.info(`Creating ${PRODUCTS.length} sample products…`)
+  logger.info(`Creating ${PRODUCTS.length} products…`)
   const products = PRODUCTS.map((p, index) => {
     const handle = slugify(p.title)
-    const option = p.option ?? { title: "Pack", values: ["Standard"] }
     const skuBase = handle.toUpperCase().slice(0, 24)
 
     return {
@@ -276,19 +275,21 @@ export default async function seedCraftStore({ container }: ExecArgs) {
       handle,
       description: p.description,
       status: ProductStatus.PUBLISHED,
-      weight: p.weight,
-      category_ids: [categoryId(p.category)],
+      category_ids: p.categories.map(categoryId),
       collection_id:
         index % 3 === 0 ? bestSellers.id : index % 3 === 1 ? newArrivals.id : undefined,
       shipping_profile_id: shippingProfile.id,
       sales_channels: [{ id: salesChannel.id }],
-      options: [{ title: option.title, values: option.values }],
-      variants: option.values.map((value) => ({
-        title: value,
-        sku: `${skuBase}-${slugify(value).toUpperCase()}`,
-        options: { [option.title]: value },
-        prices: [{ amount: p.price, currency_code: "inr" }],
-      })),
+      options: p.options,
+      variants: p.variants.map((v) => {
+        const values = Object.values(v.options)
+        return {
+          title: values.join(" / "),
+          sku: [skuBase, ...values.map((x) => slugify(x).toUpperCase())].join("-"),
+          options: v.options,
+          prices: [{ amount: v.price, currency_code: "inr" }],
+        }
+      }),
     }
   })
 
@@ -315,6 +316,8 @@ export default async function seedCraftStore({ container }: ExecArgs) {
 
   await content.upsertSettings({
     store_name: STORE_NAME,
+    // Served by the storefront from apps/storefront/public/logo.png
+    logo_url: "/logo.png",
     announcement_text: "No Cash on Delivery · Shipping charges extra",
     announcement_link: "",
     shipping_note: "Ships in 1–2 working days. Shipping charges are calculated at checkout.",
@@ -332,33 +335,33 @@ export default async function seedCraftStore({ container }: ExecArgs) {
   await content.createBanners([
     {
       title: "Everything for Handmade Jewellery",
-      subtitle: "Silk thread, kundan, beads and more – shipped across India",
-      button_text: "Shop silk thread",
-      link: "/categories/silk-thread-materials",
+      subtitle: "Kundans, clip stones, beads and more – shipped across India",
+      button_text: "Shop kundans",
+      link: "/categories/kundan-stones",
       placement: "hero",
       rank: 0,
     },
     {
-      title: "Resin Art Essentials",
-      subtitle: "Crystal clear resin, moulds, pigments and dry flowers",
-      button_text: "Explore resin art",
-      link: "/categories/resin-art",
+      title: "Beads, Sequins & Zardosi",
+      subtitle: "Seed beads, pearls, sequins and finishing touches",
+      button_text: "Shop beads",
+      link: "/categories/beads-embellishments",
       placement: "hero",
       rank: 1,
     },
     {
       title: "Kundan in every shape",
-      subtitle: "Gloss, matt and pearl",
+      subtitle: "Glass, ceramic and colour",
       button_text: "Shop kundan",
       link: "/categories/kundan-stones",
       placement: "promo",
       rank: 0,
     },
     {
-      title: "Beginner kits",
-      subtitle: "Start your first project today",
-      button_text: "View kits",
-      link: "/categories/beginner-kits",
+      title: "Invisible chain materials",
+      subtitle: "Gear wire, lock beads and pendants",
+      button_text: "Shop chains",
+      link: "/categories/invisible-chain-material",
       placement: "promo",
       rank: 1,
     },

@@ -21,30 +21,32 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
-        // Store palette – change these to re-theme the whole storefront
+        // Store palette – change these to re-theme the whole storefront.
+        // Purples come from the MemoryMakers4U logo, gold from its earrings.
+        // ("peacock" is the main brand colour, "kumkum" the accent.)
         peacock: {
-          50: "#EEF7F7",
-          100: "#D5ECEC",
-          600: "#147078",
-          700: "#0E5E63",
-          800: "#0A4549",
-          900: "#07302F",
+          50: "#F8F0FA",
+          100: "#EEDCF3",
+          600: "#8E3A9C",
+          700: "#7C2F82",
+          800: "#5E2363",
+          900: "#3F1843",
         },
         kumkum: {
-          50: "#FCEEF3",
-          600: "#B4235A",
-          700: "#951B4A",
+          50: "#FAEFF6",
+          600: "#B23C8F",
+          700: "#962F78",
         },
         zari: {
           300: "#E6CB6E",
           500: "#C9A227",
           600: "#A8861C",
         },
-        blush: "#FBF5F7",
+        blush: "#FAF4FB",
         // Section headings on the homepage
         clay: {
-          500: "#B07A5F",
-          600: "#9A6248",
+          500: "#8E3A9C",
+          600: "#7C2F82",
         },
         ink: "#1F1B24",
         grey: {

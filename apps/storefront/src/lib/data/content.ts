@@ -72,5 +72,5 @@ export const getStoreContent = async (): Promise<StoreContent> => {
 
 export const getStoreName = async () => {
   const { settings } = await getStoreContent()
-  return settings.store_name || process.env.NEXT_PUBLIC_STORE_NAME || "My Craft Store"
+  return settings.store_name || process.env.NEXT_PUBLIC_STORE_NAME || "MemoryMakers4U"
 }

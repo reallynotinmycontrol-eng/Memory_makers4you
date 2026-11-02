@@ -17,7 +17,7 @@ export default async function Footer() {
     listCategoryTree(),
   ])
   const storeName =
-    settings.store_name || process.env.NEXT_PUBLIC_STORE_NAME || "My Craft Store"
+    settings.store_name || process.env.NEXT_PUBLIC_STORE_NAME || "MemoryMakers4U"
 
   const socials = [
     { href: settings.instagram_url, label: "Instagram", Icon: InstagramIcon },

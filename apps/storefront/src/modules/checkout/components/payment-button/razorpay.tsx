@@ -89,7 +89,7 @@ export default function RazorpayPaymentButton({
       order_id: data.razorpay_order_id,
       amount: data.amount,
       currency: data.currency ?? "INR",
-      name: process.env.NEXT_PUBLIC_STORE_NAME || "My Craft Store",
+      name: process.env.NEXT_PUBLIC_STORE_NAME || "MemoryMakers4U",
       description: `Order for ${cart.items?.length ?? 0} item(s)`,
       prefill: {
         name: [address?.first_name, address?.last_name].filter(Boolean).join(" "),
@@ -97,7 +97,7 @@ export default function RazorpayPaymentButton({
         contact: address?.phone ?? undefined,
       },
       notes: { session_id: data.session_id ?? session?.id },
-      theme: { color: "#0E5E63" },
+      theme: { color: "#7C2F82" },
       handler: () => {
         // Payment succeeded in Razorpay; now create the order.
         completeOrder()
