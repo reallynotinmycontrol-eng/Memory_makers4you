@@ -7,7 +7,6 @@ import CategoryGrid from "@modules/home/components/category-grid"
 import Hero from "@modules/home/components/hero"
 import ProductRow from "@modules/home/components/product-row"
 import PromoTiles from "@modules/home/components/promo-tiles"
-import { TruckIcon } from "@modules/store-ui/icons"
 
 export const metadata: Metadata = {
   description:
@@ -55,7 +54,7 @@ async function Section({ section, countryCode }: { section: HomeSection; country
 
 export default async function Home(props: { params: Promise<{ countryCode: string }> }) {
   const { countryCode } = await props.params
-  const { banners, sections, settings } = await getStoreContent()
+  const { banners, sections } = await getStoreContent()
 
   const hero = banners.filter((b) => b.placement === "hero")
   const promos = banners.filter((b) => b.placement === "promo")
@@ -81,16 +80,8 @@ export default async function Home(props: { params: Promise<{ countryCode: strin
 
   return (
     <>
+      {/* Hidden unless hero banners are added in Admin → Storefront */}
       <Hero banners={hero} />
-
-      {settings.shipping_note && (
-        <div className="border-b border-grey-10 bg-blush">
-          <p className="content-container flex items-center justify-center gap-2 py-3 text-center text-[13px] text-grey-60">
-            <TruckIcon size={18} className="shrink-0 text-peacock-700" />
-            {settings.shipping_note}
-          </p>
-        </div>
-      )}
 
       {before.map((s) => (
         <Section key={s.id} section={s} countryCode={countryCode} />

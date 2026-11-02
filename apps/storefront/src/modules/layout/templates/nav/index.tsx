@@ -26,19 +26,20 @@ export default async function Nav() {
         link={settings.announcement_link}
       />
       <div className="sticky top-0 inset-x-0 z-50 bg-white shadow-[0_1px_0_rgba(31,27,36,0.06)]">
-        <header className="content-container flex h-16 items-center gap-3 small:h-20 small:gap-8">
+        {/* Desktop: search | centred logo | icons. Phones: menu | logo | cart. */}
+        <header className="content-container flex h-16 items-center gap-3 small:grid small:h-24 small:grid-cols-[1fr_auto_1fr] small:gap-8">
           <MobileMenuButton tree={tree} storeName={storeName} />
 
           <LocalizedClientLink
             href="/"
-            className="flex min-w-0 flex-1 items-center gap-2 small:flex-none"
+            className="flex min-w-0 flex-1 items-center gap-2 small:order-2 small:flex-none small:justify-self-center"
             data-testid="nav-store-link"
           >
             {settings.logo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <>
-                <img src={settings.logo_url} alt="" className="h-11 w-11 shrink-0 small:h-14 small:w-14" />
-                <span className="heading-display truncate text-xl text-peacock-800 small:text-2xl">{storeName}</span>
+                <img src={settings.logo_url} alt="" className="h-11 w-11 shrink-0 small:h-16 small:w-16" />
+                <span className="heading-display truncate text-xl text-peacock-800 small:text-3xl">{storeName}</span>
               </>
             ) : (
               <>
@@ -48,13 +49,13 @@ export default async function Nav() {
             )}
           </LocalizedClientLink>
 
-          <div className="hidden flex-1 small:block">
+          <div className="hidden w-full max-w-xs small:order-1 small:block">
             <Suspense>
               <SearchForm />
             </Suspense>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 small:order-3 small:justify-self-end">
             <LocalizedClientLink
               href="/account"
               aria-label="My account"

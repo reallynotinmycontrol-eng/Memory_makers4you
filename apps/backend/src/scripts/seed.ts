@@ -332,60 +332,19 @@ export default async function seedCraftStore({ container }: ExecArgs) {
       "Quality jewellery-making and craft supplies for makers across India.",
   })
 
-  await content.createBanners([
-    {
-      title: "Everything for Handmade Jewellery",
-      subtitle: "Kundans, clip stones, beads and more – shipped across India",
-      button_text: "Shop kundans",
-      link: "/categories/kundan-stones",
-      placement: "hero",
-      rank: 0,
-    },
-    {
-      title: "Beads, Sequins & Zardosi",
-      subtitle: "Seed beads, pearls, sequins and finishing touches",
-      button_text: "Shop beads",
-      link: "/categories/beads-embellishments",
-      placement: "hero",
-      rank: 1,
-    },
-    {
-      title: "Kundan in every shape",
-      subtitle: "Glass, ceramic and colour",
-      button_text: "Shop kundan",
-      link: "/categories/kundan-stones",
-      placement: "promo",
-      rank: 0,
-    },
-    {
-      title: "Invisible chain materials",
-      subtitle: "Gear wire, lock beads and pendants",
-      button_text: "Shop chains",
-      link: "/categories/invisible-chain-material",
-      placement: "promo",
-      rank: 1,
-    },
-  ])
+  // No banners: the homepage is a catalogue of category grids. Hero and
+  // promo banners can be added later in Admin → Storefront if wanted.
 
-  // Homepage: one photo grid per main category (in menu order), with a
-  // couple of product rows in between. Reorder or edit in Admin → Storefront.
-  const homeSections: Record<string, unknown>[] = []
-  CATEGORY_TREE.forEach((c, i) => {
-    homeSections.push({
+  // Homepage: one photo grid per main category, in menu order.
+  // Reorder, edit or add product rows in Admin → Storefront.
+  await content.createHomeSections(
+    CATEGORY_TREE.map((c, rank) => ({
       title: c.name,
       type: "category_grid",
       category_handle: slugify(c.name),
       max_items: 24,
-    })
-    if (i === 1) {
-      homeSections.push({ title: "Best Sellers", type: "product_grid", collection_handle: "best-sellers", max_items: 8 })
-    }
-    if (i === 4) {
-      homeSections.push({ title: "New Arrivals", type: "product_grid", collection_handle: "new-arrivals", max_items: 8 })
-    }
-  })
-  await content.createHomeSections(
-    homeSections.map((sec, rank) => ({ ...sec, rank })) as any
+      rank,
+    })) as any
   )
 
   logger.info("✔ Seeding finished.")
