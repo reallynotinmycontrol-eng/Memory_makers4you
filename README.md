@@ -9,6 +9,23 @@ Prices are in **INR**, entered **inclusive of GST**. The seed creates an India r
 
 ---
 
+## Quickest way to try it: GitHub Codespaces (nothing to install)
+
+1. Open this repository on GitHub.
+2. Click the green **Code** button → **Codespaces** tab → **Create codespace on main**.
+3. Wait 5–10 minutes the first time. A terminal shows the progress; it installs everything, creates the database and loads the sample store.
+4. When it prints **"Your store is running"**, open the two links it shows:
+   - **Store** (port 8000)
+   - **Admin** (port 9000, add `/app`) – login `admin@craftstore.local` / `craftstore123`
+
+You can also find both links in the **Ports** tab at the bottom of the screen.
+
+- If the store isn't running after you come back later, open a terminal (**Ctrl + `**) and run `bash .devcontainer/start.sh`.
+- Stop the codespace when you're done (github.com/codespaces → … → **Stop codespace**) to save your free monthly hours.
+- To try Razorpay here, add `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` as Codespaces secrets in your GitHub settings, then rebuild the codespace.
+
+---
+
 ## 1. Run it on your computer
 
 ### You need

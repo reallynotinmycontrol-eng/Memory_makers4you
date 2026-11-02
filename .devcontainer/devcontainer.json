@@ -1,0 +1,22 @@
+{
+  "name": "Craft Store",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb"
+  },
+  "forwardPorts": [8000, 9000],
+  "portsAttributes": {
+    "8000": { "label": "Store", "onAutoForward": "openBrowser" },
+    "9000": { "label": "Admin + API", "onAutoForward": "notify" }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postAttachCommand": "bash .devcontainer/start.sh",
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["README.md"]
+    }
+  }
+}

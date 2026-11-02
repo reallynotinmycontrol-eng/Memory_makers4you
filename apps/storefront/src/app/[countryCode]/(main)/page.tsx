@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 
 import { getCategoryTiles, getSectionProducts } from "@lib/data/catalog"
+import { listCategoryTree } from "@lib/data/categories"
 import { getStoreContent, HomeSection } from "@lib/data/content"
 import CategoryGrid from "@modules/home/components/category-grid"
 import Hero from "@modules/home/components/hero"
@@ -59,13 +60,20 @@ export default async function Home(props: { params: Promise<{ countryCode: strin
   const hero = banners.filter((b) => b.placement === "hero")
   const promos = banners.filter((b) => b.placement === "promo")
 
-  // With no sections configured yet, show all categories so the page isn't empty.
-  const list: HomeSection[] = sections.length
-    ? sections
-    : [
-        { id: "default-cats", title: "Shop by Category", type: "category_grid", max_items: 12, rank: 0 },
-        { id: "default-new", title: "Latest Products", type: "product_grid", max_items: 8, rank: 1 },
-      ]
+  // With no sections configured yet, show one grid per main category
+  // (like a catalogue), so the page is never empty.
+  let list: HomeSection[] = sections
+  if (!list.length) {
+    const tree = await listCategoryTree()
+    list = tree.map((c, i) => ({
+      id: `default-${c.id}`,
+      title: c.name,
+      type: "category_grid" as const,
+      category_handle: c.handle,
+      max_items: 24,
+      rank: i,
+    }))
+  }
 
   // Promo tiles appear after the second section.
   const before = list.slice(0, 2)

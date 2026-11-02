@@ -10,3 +10,4 @@ apps/storefront/.next
 apps/storefront/out
 *.log
 admin-login.txt
+.devcontainer/publishable-key.txt
