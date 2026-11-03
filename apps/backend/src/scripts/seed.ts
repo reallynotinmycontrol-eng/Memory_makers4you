@@ -6,7 +6,6 @@ import {
 } from "@medusajs/framework/utils"
 import {
   createApiKeysWorkflow,
-  createCollectionsWorkflow,
   createInventoryLevelsWorkflow,
   createProductCategoriesWorkflow,
   createProductsWorkflow,
@@ -226,7 +225,9 @@ export default async function seedCraftStore({ container }: ExecArgs) {
         name: c.name,
         handle: slugify(c.name),
         description: c.description,
-        is_active: true,
+        // Hidden while all its items are unpriced drafts; switch on in
+        // Admin → Categories once they are priced and published.
+        is_active: PRODUCTS.some((p) => !p.draft && p.categories.includes(c.name)),
         rank: i,
       })),
     },
@@ -242,42 +243,34 @@ export default async function seedCraftStore({ container }: ExecArgs) {
       rank: i,
     }))
   })
-  const { result: childCategories } = await createProductCategoriesWorkflow(
-    container
-  ).run({ input: { product_categories: children } })
+  const childCategories = children.length
+    ? (
+        await createProductCategoriesWorkflow(container).run({
+          input: { product_categories: children },
+        })
+      ).result
+    : []
+  const allCategories = [...parents, ...childCategories]
 
   const categoryId = (name: string) => {
-    const found = childCategories.find((c) => c.name === name)
+    const found = allCategories.find((c) => c.name === name)
     if (!found) throw new Error(`Seed: unknown category "${name}"`)
     return found.id
   }
 
-  // ------------------------------------------------------ collections
-  const { result: collections } = await createCollectionsWorkflow(container).run({
-    input: {
-      collections: [
-        { title: "New Arrivals", handle: "new-arrivals" },
-        { title: "Best Sellers", handle: "best-sellers" },
-      ],
-    },
-  })
-  const newArrivals = collections.find((c) => c.handle === "new-arrivals")!
-  const bestSellers = collections.find((c) => c.handle === "best-sellers")!
-
   // --------------------------------------------------------- products
   logger.info(`Creating ${PRODUCTS.length} products…`)
-  const products = PRODUCTS.map((p, index) => {
+  const products = PRODUCTS.map((p) => {
     const handle = slugify(p.title)
-    const skuBase = handle.toUpperCase().slice(0, 24)
+    const skuBase = handle.toUpperCase()
 
     return {
       title: p.title,
       handle,
       description: p.description,
-      status: ProductStatus.PUBLISHED,
+      // Items without a price in the sheet stay hidden until priced in Admin.
+      status: p.draft ? ProductStatus.DRAFT : ProductStatus.PUBLISHED,
       category_ids: p.categories.map(categoryId),
-      collection_id:
-        index % 3 === 0 ? bestSellers.id : index % 3 === 1 ? newArrivals.id : undefined,
       shipping_profile_id: shippingProfile.id,
       sales_channels: [{ id: salesChannel.id }],
       options: p.options,
@@ -287,7 +280,8 @@ export default async function seedCraftStore({ container }: ExecArgs) {
           title: values.join(" / "),
           sku: [skuBase, ...values.map((x) => slugify(x).toUpperCase())].join("-"),
           options: v.options,
-          prices: [{ amount: v.price, currency_code: "inr" }],
+          prices:
+            v.price === undefined ? [] : [{ amount: v.price, currency_code: "inr" }],
         }
       }),
     }
@@ -335,17 +329,17 @@ export default async function seedCraftStore({ container }: ExecArgs) {
   // No banners: the homepage is a catalogue of category grids. Hero and
   // promo banners can be added later in Admin → Storefront if wanted.
 
-  // Homepage: one photo grid per main category, in menu order.
-  // Reorder, edit or add product rows in Admin → Storefront.
-  await content.createHomeSections(
-    CATEGORY_TREE.map((c, rank) => ({
-      title: c.name,
+  // Homepage: one photo grid of every category, in the Excel sheet's order.
+  // Reorder, edit or add sections in Admin → Storefront.
+  await content.createHomeSections([
+    {
+      title: "Shop by Category",
       type: "category_grid",
-      category_handle: slugify(c.name),
-      max_items: 24,
-      rank,
-    })) as any
-  )
+      category_handle: null,
+      max_items: CATEGORY_TREE.length,
+      rank: 0,
+    },
+  ] as any)
 
   logger.info("✔ Seeding finished.")
   logger.info("--------------------------------------------------------------")

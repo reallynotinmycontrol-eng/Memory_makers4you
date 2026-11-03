@@ -15,7 +15,34 @@ export default function MegaMenu({ tree }: { tree: Tree }) {
 
   return (
     <nav aria-label="Categories" className="relative hidden small:block border-t border-grey-10">
-      <ul className="content-container flex items-center justify-center gap-x-1">
+      {/* One line only: categories that don't fit wrap onto a hidden second
+          line, and every category is always reachable from "All Categories". */}
+      <ul className="content-container flex h-11 flex-wrap items-center justify-center gap-x-1 overflow-hidden">
+        <li className="group">
+          <LocalizedClientLink
+            href="/store"
+            className="flex items-center gap-1 px-4 py-3 text-sm font-semibold text-peacock-700"
+          >
+            All Categories
+            <ChevronDown size={14} />
+          </LocalizedClientLink>
+          <div className="invisible absolute left-1/2 top-full z-40 -translate-x-1/2 pt-1 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+            <div className="w-[min(960px,94vw)] rounded-xl border border-grey-10 bg-white p-6 shadow-lg">
+              <ul className="grid grid-cols-4 gap-x-6 gap-y-2">
+                {tree.map((cat) => (
+                  <li key={cat.id}>
+                    <LocalizedClientLink
+                      href={`/categories/${cat.handle}`}
+                      className="block py-1 text-sm text-grey-60 hover:text-peacock-700"
+                    >
+                      {cat.name}
+                    </LocalizedClientLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </li>
         {tree.map((cat) => {
           const children = cat.category_children ?? []
           return (

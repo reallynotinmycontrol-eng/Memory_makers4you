@@ -5,7 +5,7 @@ An online store for jewellery-making and craft supplies.
 - **apps/backend** – Medusa v2.18 backend and **admin panel** (products, categories, orders, customers, discounts, plus a custom **Storefront** page for banners, homepage sections and site settings). Includes a **Razorpay** payment provider.
 - **apps/storefront** – Next.js storefront. Everything on it comes from the admin: menu, homepage, products, prices, stock, banners, announcement bar, contact details.
 
-Prices are in **INR**, entered **inclusive of GST**. The seed creates an India region, two shipping options (Standard ₹70, Express ₹150), 7 main categories with 37 sub-categories, and the 93 products from the MemoryMakers4U price list (`apps/backend/src/scripts/catalog.ts`) with no photos (the store shows a placeholder until you upload your own).
+Prices are in **INR**, entered **inclusive of GST**. The seed creates an India region, two shipping options (Standard ₹70, Express ₹150), the 39 categories and 117 items from the MemoryMakers4U Excel price list, exactly as listed there (`apps/backend/src/scripts/catalog.ts`; the 3 items with no price are saved as hidden drafts) with no photos (the store shows a placeholder until you upload your own).
 
 ---
 
@@ -118,7 +118,7 @@ Store: **http://localhost:8000** (it redirects to `/in`).
 | Products, photos, prices, stock, variants (colour, size…) | **Products** |
 | Menu / categories (order, names, sub-categories) | **Products → Categories** (drag to reorder) |
 | Category tile photo | Categories → edit category → **Metadata** → key `image_url`, value = image link. Without it, a product photo from that category is used. |
-| "Best Sellers", "New Arrivals" | **Products → Collections** – add products to them |
+| Product groups (e.g. "Best Sellers") | **Products → Collections** – create one, add products, then add a homepage row for it in **Storefront** |
 | Homepage banners (slider + promo tiles) | **Storefront → Banners** |
 | Homepage sections and their order | **Storefront → Homepage sections** |
 | Announcement bar, logo, store name, phone, WhatsApp, address, social links, footer text, shipping note | **Storefront → Settings** |

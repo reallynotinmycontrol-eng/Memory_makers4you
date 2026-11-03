@@ -60,11 +60,15 @@ export default async function Home(props: { params: Promise<{ countryCode: strin
   const promos = banners.filter((b) => b.placement === "promo")
 
   // With no sections configured yet, show one grid per main category
-  // (like a catalogue), so the page is never empty.
+  // (like a catalogue), or one grid of every category when there are no
+  // sub-categories, so the page is never empty.
   let list: HomeSection[] = sections
   if (!list.length) {
     const tree = await listCategoryTree()
-    list = tree.map((c, i) => ({
+    const nested = tree.some((c) => c.category_children?.length)
+    list = !nested
+      ? [{ id: "default-all", title: "Shop by Category", type: "category_grid" as const, category_handle: null, max_items: 100, rank: 0 }]
+      : tree.map((c, i) => ({
       id: `default-${c.id}`,
       title: c.name,
       type: "category_grid" as const,
